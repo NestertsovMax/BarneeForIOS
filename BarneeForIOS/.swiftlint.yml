@@ -1,0 +1,45 @@
+excluded:
+    - Pods
+    - Scripts
+disabled_rules:
+    - trailing_whitespace
+    - type_body_length
+    - nesting
+    - todo
+    - notification_center_detachment
+    - line_length
+    - type_name
+
+opt_in_rules:
+    - private_outlet
+    - empty_count
+    - closing_brace
+    - opening_brace
+    - trailing_semicolon
+    - explicit_init
+    - overridden_super_call
+    - redundant_nil_coalescing
+    - operator_usage_whitespace
+    - closure_end_indentation
+    - prohibited_super_call
+    - fatal_error_message
+    - force_unwrapping
+
+trailing_semicolon: error
+colon: error
+comma: error
+opening_brace: error
+closing_brace: error
+
+cyclomatic_complexity:
+    ignores_case_statements: true
+
+variable_name:
+  min_length:
+    warning: 1
+
+file_length:
+    warning: 700
+    error: 900
+
+warning_threshold: 15
