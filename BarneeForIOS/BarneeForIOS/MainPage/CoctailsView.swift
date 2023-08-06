@@ -10,13 +10,13 @@ class CoctailsView: UIViewController {
     }()
     
     private let drinksCategory: UICollectionView = {
-        let collectionView = UICollectionView()
+      let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         //collectionView.register(<#T##nib: UINib?##UINib?#>, forCellWithReuseIdentifier: <#T##String#>)
         return collectionView
     }()
     
     private let drinksList: UICollectionView = {
-        let collectionView = UICollectionView()
+      let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         //collectionView.register(<#T##nib: UINib?##UINib?#>, forCellWithReuseIdentifier: <#T##String#>)
         return collectionView
     }()
