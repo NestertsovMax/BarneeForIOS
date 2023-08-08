@@ -4,6 +4,7 @@ class CoctailsView: UIViewController {
     
     private var drinksCategories: [DrinkCategory] = []
     private var tastes: [String] = []
+    private var cocktails: [Cocktail] = []
     
     private let logoLabel: UILabel = {
         let label = UILabel()
@@ -21,7 +22,7 @@ class CoctailsView: UIViewController {
     
     private let drinksList: UICollectionView = {
       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        //collectionView.register(<#T##nib: UINib?##UINib?#>, forCellWithReuseIdentifier: <#T##String#>)
+        collectionView.register(CoctailsListCell.self, forCellWithReuseIdentifier: "CoctailsListCell")
         return collectionView
     }()
     
@@ -112,16 +113,15 @@ class CoctailsView: UIViewController {
        }
 
     func setupVerticalCollectionView() {
-           let flowLayout = UICollectionViewFlowLayout()
-           flowLayout.scrollDirection = .vertical
-           let itemWidth = (drinksList.bounds.width - flowLayout.minimumInteritemSpacing) / 2
-           flowLayout.itemSize = CGSize(width: itemWidth, height: 50)
-           flowLayout.minimumInteritemSpacing = 10
-           flowLayout.minimumLineSpacing = 10
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        let itemWidth = (drinksList.bounds.width - flowLayout.minimumInteritemSpacing) / 2
+        flowLayout.itemSize = CGSize(width: itemWidth, height: 200)
+        flowLayout.minimumInteritemSpacing = 10
+        flowLayout.minimumLineSpacing = 10
+        drinksList.collectionViewLayout = flowLayout
+    }
 
-           drinksList.collectionViewLayout = flowLayout
-       }
-    
     func setupStackView() {
         view.addSubview(filtersPanel)
         
@@ -156,21 +156,14 @@ class CoctailsView: UIViewController {
             guard let url = URL(string: "https://api.absolutdrinks.com/drinks/tasting") else {
                 return
             }
-            
             URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
                 guard let self = self, let data = data else {
                     return
                 }
-                
                 do {
                     if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                        // Преобразуем JSON данные в массив категорий напитков
                         let categories = jsonArray.compactMap { DrinkCategory(json: $0) }
-                        
-                        // Обновляем вашу коллекцию данных с категориями напитков
                         self.drinksCategories = categories
-                        
-                        // Вызываем метод обновления коллекции на главном потоке
                         DispatchQueue.main.async {
                             self.drinksCategory.reloadData()
                         }
@@ -182,7 +175,7 @@ class CoctailsView: UIViewController {
         }
     
     func fetchTastes() {
-            guard let url = URL(string: "https://api.absolutdrinks.com/drinks/tasting") else {
+            guard let url = URL(string: "https://api.absolutdrinks.com/drinks/taste") else {
                 return
             }
             
@@ -193,17 +186,11 @@ class CoctailsView: UIViewController {
                 
                 do {
                     if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                        // Преобразуем JSON данные в массив характеристик Taste / Tasting
                         let tastes = jsonArray.compactMap { tasteData in
-                            tasteData["name"] as? String // Предположим, что имя характеристики хранится в ключе "name"
+                            tasteData["name"] as? String
                         }
-                        
-                        // Обновляем массив tastes
                         self.tastes = tastes
-                        
-                        // Вызываем метод обновления коллекции на главном потоке (если это нужно)
                         DispatchQueue.main.async {
-                            // ... Можете обновить вашу коллекцию, если она отображается на экране ...
                         }
                     }
                 } catch {
@@ -215,20 +202,31 @@ class CoctailsView: UIViewController {
 
 extension CoctailsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return drinksCategories.count
+        if collectionView == drinksCategory {
+            return drinksCategories.count
+        } else {
+            return cocktails.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
-        let category = drinksCategories[indexPath.item]
-        cell.configure(with: category)
-        return cell
+        if collectionView == drinksCategory {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
+            let category = drinksCategories[indexPath.item]
+            cell.configure(with: category)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoctailsListCell.identifier, for: indexPath) as! CoctailsListCell
+            let cocktail = cocktails[indexPath.item] // Подставьте правильные данные для коктейлей из вашей модели
+            cell.configure(with: cocktail)
+            return cell
+        }
     }
 }
 
 extension CoctailsView: UICollectionViewDelegate {
-    // Добавьте методы делегата, если необходимо
 }
+
 
 struct DrinkCategory {
     let id: Int
@@ -245,3 +243,20 @@ struct DrinkCategory {
     }
 }
 
+struct Cocktail {
+    let id: String
+    let name: String
+    let imageUrl: String
+    
+    init?(json: [String: Any]) {
+        guard let id = json["idDrink"] as? String,
+              let name = json["strDrink"] as? String,
+              let imageUrl = json["strDrinkThumb"] as? String else {
+            return nil
+        }
+        
+        self.id = id
+        self.name = name
+        self.imageUrl = imageUrl
+    }
+}
