@@ -8,9 +8,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    let interactor = Interactor()
-    let presenter = Presenter(interactor: interactor)
-    let rootViewController = CoctailsView(presenter: presenter)
+    //let interactor = CoctailsIteractor()
+    //let presenter = CoctailsPresenter(interactor: interactor)
+    let rootViewController = CoctailsView()//presenter: presenter)
 
     window?.rootViewController = rootViewController
 
