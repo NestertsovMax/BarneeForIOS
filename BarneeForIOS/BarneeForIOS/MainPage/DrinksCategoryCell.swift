@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 
 protocol DrinksCategoryCellDelegate: AnyObject {
     func didTapCategory(withId categoryId: Int)
@@ -23,6 +24,7 @@ class DrinksCategoryCell: UICollectionViewCell {
     
     private var categoryId: Int = 0
     weak var delegate: DrinksCategoryCellDelegate?
+    static let identifier = "DrinksCategoryCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,8 +71,12 @@ class DrinksCategoryCell: UICollectionViewCell {
         delegate?.didTapCategory(withId: categoryId)
     }
     
-    func configure(with category: DrinkCategory) {
-        categoryId = category.id
-        titleLabel.text = category.name
+    func configure(with categoryCocktails: [Cocktail]) {
+        if let firstCocktail = categoryCocktails.first {
+            if let cocktailId = Int(firstCocktail.id) {
+                categoryId = cocktailId
+                titleLabel.text = firstCocktail.name
+            }
+        }
     }
 }

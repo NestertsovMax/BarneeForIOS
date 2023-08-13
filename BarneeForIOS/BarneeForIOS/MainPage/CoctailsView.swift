@@ -1,28 +1,30 @@
 import UIKit
 
-class CoctailsView: UIViewController {
+class CoctailsView: UIViewController, CoctailsViewProtocol {
     
-    private var drinksCategories: [DrinkCategory] = []
-    private var tastes: [String] = []
+    var presenter: CoctailsPresenterProtocol?
+    
     private var cocktails: [Cocktail] = []
+    private var categories: [String] = []
+    private var cocktailNames: [String] = []
+    private var viewModelsCategory = [DrinksCategoryCell]()
     
     private let logoLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = .zero
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 22, weight: .semibold)
         return label
     }()
     
     private let drinksCategory: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(DrinksCategoryCell.self, forCellWithReuseIdentifier: "DrinksCategoryCell")
+        collectionView.register(DrinksCategoryCell.self, forCellWithReuseIdentifier: DrinksCategoryCell.identifier)
         return collectionView
     }()
-
     
     private let drinksList: UICollectionView = {
-      let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        collectionView.register(CoctailsListCell.self, forCellWithReuseIdentifier: "CoctailsListCell")
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(CoctailsListCell.self, forCellWithReuseIdentifier: CoctailsListCell.identifier)
         return collectionView
     }()
     
@@ -52,13 +54,20 @@ class CoctailsView: UIViewController {
         setupHorizontalCollectionView()
         setupVerticalCollectionView()
         setupStackView()
-        fetchDrinkCategories()
-        fetchTastes()
+        
+        presenter = CoctailsPresenter(view: self, interactor: CoctailsInteractor(apiService: APICaller.shared))
         
         self.view.addSubview(logoLabel)
         self.view.addSubview(drinksCategory)
         self.view.addSubview(drinksList)
         self.view.addSubview(filtersPanel)
+        
+        drinksCategory.delegate = self
+        drinksCategory.dataSource = self
+        drinksList.delegate = self
+        drinksList.dataSource = self
+        
+        presenter?.viewDidLoad()
     }
     
     override func viewDidLayoutSubviews() {
@@ -81,8 +90,8 @@ class CoctailsView: UIViewController {
         drinksList.frame = CGRect(
             x: 20,
             y: 250,
-            width: view.frame.self.width - 10,
-            height: 36
+            width: view.frame.size.width - 10,
+            height: view.frame.size.height - 250
         )
     }
     
@@ -98,6 +107,12 @@ class CoctailsView: UIViewController {
             alpha: 1.0)
     }
     
+    func reloadCategoryCollectionView() {
+        DispatchQueue.main.async {
+            self.drinksCategory.reloadData()
+        }
+    }
+    
     func setCommonBackgroundColor(_ color: UIColor) {
         view.backgroundColor = color
         logoLabel.backgroundColor = color
@@ -106,12 +121,12 @@ class CoctailsView: UIViewController {
     }
     
     func setupHorizontalCollectionView() {
-           let horizontalLayout = UICollectionViewFlowLayout()
-           horizontalLayout.scrollDirection = .horizontal
-           horizontalLayout.itemSize = CGSize(width: 100, height: 36)
-           drinksCategory.collectionViewLayout = horizontalLayout
-       }
-
+        let horizontalLayout = UICollectionViewFlowLayout()
+        horizontalLayout.scrollDirection = .horizontal
+        horizontalLayout.itemSize = CGSize(width: 100, height: 36)
+        drinksCategory.collectionViewLayout = horizontalLayout
+    }
+    
     func setupVerticalCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
@@ -121,7 +136,7 @@ class CoctailsView: UIViewController {
         flowLayout.minimumLineSpacing = 10
         drinksList.collectionViewLayout = flowLayout
     }
-
+    
     func setupStackView() {
         view.addSubview(filtersPanel)
         
@@ -135,128 +150,84 @@ class CoctailsView: UIViewController {
         let favourite = UIButton()
         let filters = UIButton()
         let search = UIButton()
-
-     favourite.setImage(UIImage(named: "favourite"), for: .normal)
-     filters.setImage(UIImage(named: "filters"), for: .normal)
-     search.setImage(UIImage(named: "search"), for: .normal)
-
-     filtersPanel.addArrangedSubview(favourite)
-     filtersPanel.addArrangedSubview(filters)
-     filtersPanel.addArrangedSubview(search)
         
-    filtersPanel.backgroundColor = UIColor(
+        favourite.setImage(UIImage(named: "favourite"), for: .normal)
+        filters.setImage(UIImage(named: "filters"), for: .normal)
+        search.setImage(UIImage(named: "search"), for: .normal)
+        
+        favourite.contentMode = .scaleToFill
+        
+        filtersPanel.addArrangedSubview(favourite)
+        filtersPanel.addArrangedSubview(filters)
+        filtersPanel.addArrangedSubview(search)
+        
+        filtersPanel.backgroundColor = UIColor(
             red: CGFloat(0x56) / 255.0,
             green: CGFloat(0x56) / 255.0,
             blue: CGFloat(0x56) / 255.0,
             alpha: 1.0
         )
     }
+
+    func updateCocktails(_ cocktails: [Cocktail]) {
+        self.cocktails = cocktails
+        self.drinksList.reloadData()
+        
+        let cocktailNames = cocktails.map { $0.name }
+        presenter?.updateCategories(cocktailNames)
+    }
     
-    func fetchDrinkCategories() {
-            guard let url = URL(string: "https://api.absolutdrinks.com/drinks/tasting") else {
-                return
-            }
-            URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-                guard let self = self, let data = data else {
-                    return
-                }
-                do {
-                    if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                        let categories = jsonArray.compactMap { DrinkCategory(json: $0) }
-                        self.drinksCategories = categories
-                        DispatchQueue.main.async {
-                            self.drinksCategory.reloadData()
-                        }
-                    }
-                } catch {
-                    print("Error parsing JSON: \(error)")
-                }
-            }.resume()
-        }
+    func updateCategories(_ categories: [String]) {
+        self.categories = categories
+        reloadCategoryCollectionView()
+    }
     
-    func fetchTastes() {
-            guard let url = URL(string: "https://api.absolutdrinks.com/drinks/taste") else {
-                return
-            }
-            
-            URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-                guard let self = self, let data = data else {
-                    return
-                }
-                
-                do {
-                    if let jsonArray = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                        let tastes = jsonArray.compactMap { tasteData in
-                            tasteData["name"] as? String
-                        }
-                        self.tastes = tastes
-                        DispatchQueue.main.async {
-                        }
-                    }
-                } catch {
-                    print("Error parsing JSON: \(error)")
-                }
-            }.resume()
-        }
+    func showError(_ error: Error) {
+        // Handle error presentation
+    }
+
+}
+
+protocol CoctailsViewProtocol: AnyObject {
+    func updateCocktails(_ cocktails: [Cocktail])
+    func showError(_ error: Error)
+    func reloadCategoryCollectionView()
+    func updateCategories(_ categories: [String])
 }
 
 extension CoctailsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == drinksCategory {
-            return drinksCategories.count
-        } else {
+            return categories.count
+        } else if collectionView == drinksList {
             return cocktails.count
         }
+        return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == drinksCategory {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
-            let category = drinksCategories[indexPath.item]
-            cell.configure(with: category)
+            cell.configure(with: viewModelsCategory[indexPath.row])
             return cell
-        } else {
+        } else if collectionView == drinksList {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoctailsListCell.identifier, for: indexPath) as! CoctailsListCell
-            let cocktail = cocktails[indexPath.item] // Подставьте правильные данные для коктейлей из вашей модели
-            cell.configure(with: cocktail)
+            let cocktail = cocktails[indexPath.item] // Ваш массив коктелей
+            let cocktailName = cocktail.name // Извлекаем имя из внутреннего массива коктейля
+            cell.configure(with: cocktailName)
             return cell
         }
     }
 }
 
 extension CoctailsView: UICollectionViewDelegate {
-}
-
-
-struct DrinkCategory {
-    let id: Int
-    let name: String
-
-    init?(json: [String: Any]) {
-        guard let id = json["id"] as? Int,
-              let name = json["name"] as? String else {
-            return nil
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == drinksCategory {
+            let selectedCategory = categories[indexPath.item]
+        } else if collectionView == drinksList {
+            let selectedCocktail = cocktails[indexPath.item]
         }
-
-        self.id = id
-        self.name = name
     }
 }
 
-struct Cocktail {
-    let id: String
-    let name: String
-    let imageUrl: String
-    
-    init?(json: [String: Any]) {
-        guard let id = json["idDrink"] as? String,
-              let name = json["strDrink"] as? String,
-              let imageUrl = json["strDrinkThumb"] as? String else {
-            return nil
-        }
-        
-        self.id = id
-        self.name = name
-        self.imageUrl = imageUrl
-    }
-}
+

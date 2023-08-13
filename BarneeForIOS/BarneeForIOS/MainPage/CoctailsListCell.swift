@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Foundation
 
 class CoctailsListCell: UICollectionViewCell {
     static let identifier = "CoctailsListCell"
     
     private let cocktailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -50,7 +51,7 @@ class CoctailsListCell: UICollectionViewCell {
     
     func configure(with cocktail: Cocktail) {
         nameLabel.text = cocktail.name
-        if let url = URL(string: cocktail.imageUrl) {
+        if let url = URL(string: cocktail.imageURL) {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: url) {
                     DispatchQueue.main.async { [weak self] in

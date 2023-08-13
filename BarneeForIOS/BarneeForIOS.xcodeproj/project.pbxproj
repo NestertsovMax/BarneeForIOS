@@ -16,6 +16,7 @@
 		6F6D16872A7BC2C700890D1B /* CoctailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D16862A7BC2C700890D1B /* CoctailsView.swift */; };
 		6F6D16892A80700D00890D1B /* CoctailsIteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D16882A80700D00890D1B /* CoctailsIteractor.swift */; };
 		6F6D168B2A80A81700890D1B /* DrinksCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D168A2A80A81700890D1B /* DrinksCategoryCell.swift */; };
+		6F6D168F2A83707100890D1B /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D168E2A83707100890D1B /* APICaller.swift */; };
 		870A28209762842FE1FE6A45 /* Pods_BarneeForIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC40D93A04165E04DD2F1C7 /* Pods_BarneeForIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		6F6D16862A7BC2C700890D1B /* CoctailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailsView.swift; sourceTree = "<group>"; };
 		6F6D16882A80700D00890D1B /* CoctailsIteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailsIteractor.swift; sourceTree = "<group>"; };
 		6F6D168A2A80A81700890D1B /* DrinksCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksCategoryCell.swift; sourceTree = "<group>"; };
+		6F6D168E2A83707100890D1B /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		A8DE81060D8D59F3376E59EC /* Pods-BarneeForIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarneeForIOS.debug.xcconfig"; path = "Target Support Files/Pods-BarneeForIOS/Pods-BarneeForIOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 			children = (
 				6F6D167B2A404C0E00890D1B /* MainPage */,
 				6F6D167D2A404C5E00890D1B /* AppDelegate */,
+				6F6D168D2A83704A00890D1B /* APICaller */,
 				6F6D167C2A404C2400890D1B /* Resources */,
 			);
 			path = BarneeForIOS;
@@ -105,6 +108,14 @@
 				6F6D16822A79279F00890D1B /* SceneDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		6F6D168D2A83704A00890D1B /* APICaller */ = {
+			isa = PBXGroup;
+			children = (
+				6F6D168E2A83707100890D1B /* APICaller.swift */,
+			);
+			path = APICaller;
 			sourceTree = "<group>";
 		};
 		9C7C514000081C2369781A85 /* Pods */ = {
@@ -225,6 +236,7 @@
 				6F6D16672A404B4800890D1B /* AppDelegate.swift in Sources */,
 				6F6D16852A79294700890D1B /* CoctailsListCell.swift in Sources */,
 				6F6D16832A79279F00890D1B /* SceneDelegate.swift in Sources */,
+				6F6D168F2A83707100890D1B /* APICaller.swift in Sources */,
 				6F6D16872A7BC2C700890D1B /* CoctailsView.swift in Sources */,
 				6F6D168B2A80A81700890D1B /* DrinksCategoryCell.swift in Sources */,
 			);
