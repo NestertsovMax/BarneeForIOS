@@ -212,8 +212,8 @@ extension CoctailsView: UICollectionViewDataSource {
             return cell
         } else if collectionView == drinksList {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoctailsListCell.identifier, for: indexPath) as! CoctailsListCell
-            let cocktail = cocktails[indexPath.item] // Ваш массив коктелей
-            let cocktailName = cocktail.name // Извлекаем имя из внутреннего массива коктейля
+            let cocktail = cocktails[indexPath.row]
+            let cocktailName = cocktail.name
             cell.configure(with: cocktailName)
             return cell
         }
