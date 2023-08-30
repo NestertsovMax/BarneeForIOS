@@ -208,7 +208,8 @@ extension CoctailsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == drinksCategory {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
-            cell.configure(with: viewModelsCategory[indexPath.row])
+
+            cell.configure(with: categories[indexPath.row])
             return cell
         } else if collectionView == drinksList {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoctailsListCell.identifier, for: indexPath) as! CoctailsListCell

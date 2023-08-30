@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03FA19EA2A8B6D2500D4781A /* CoctailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA19E92A8B6D2500D4781A /* CoctailsRouter.swift */; };
 		6F6D16672A404B4800890D1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D16662A404B4800890D1B /* AppDelegate.swift */; };
 		6F6D16702A404B4900890D1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F6D166F2A404B4900890D1B /* Assets.xcassets */; };
 		6F6D16732A404B4900890D1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F6D16712A404B4900890D1B /* LaunchScreen.storyboard */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03FA19E92A8B6D2500D4781A /* CoctailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoctailsRouter.swift; sourceTree = "<group>"; };
 		0EC40D93A04165E04DD2F1C7 /* Pods_BarneeForIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BarneeForIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC45AB9555A4AE6B436C96F /* Pods-BarneeForIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarneeForIOS.release.xcconfig"; path = "Target Support Files/Pods-BarneeForIOS/Pods-BarneeForIOS.release.xcconfig"; sourceTree = "<group>"; };
 		6F6D16632A404B4800890D1B /* BarneeForIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarneeForIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +256,7 @@
 				6F6D16672A404B4800890D1B /* AppDelegate.swift in Sources */,
 				6F6D16852A79294700890D1B /* CoctailsListCell.swift in Sources */,
 				6F6D16832A79279F00890D1B /* SceneDelegate.swift in Sources */,
+				03FA19EA2A8B6D2500D4781A /* CoctailsRouter.swift in Sources */,
 				6F6D168F2A83707100890D1B /* APICaller.swift in Sources */,
 				6F6D16872A7BC2C700890D1B /* CoctailsView.swift in Sources */,
 				6F6D168B2A80A81700890D1B /* DrinksCategoryCell.swift in Sources */,
