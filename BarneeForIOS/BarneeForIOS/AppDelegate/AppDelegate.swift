@@ -12,9 +12,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let interactor = CoctailsInteractor(apiService: apiService)
         
         let rootViewController = CoctailsView()
-        let router = CoctailsRouter()
-        router.viewController = rootViewController
-        let presenter = CoctailsPresenter(view: rootViewController, interactor: interactor, router: router)
+        //let router = CoctailsMainPageRouter()
+        //router.viewController = rootViewController
+        // add from next line , router
+        let presenter = CoctailsPresenter(view: rootViewController, interactor: interactor)
         rootViewController.presenter = presenter
 
         

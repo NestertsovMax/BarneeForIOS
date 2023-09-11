@@ -204,21 +204,22 @@ extension CoctailsView: UICollectionViewDataSource {
         }
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == drinksCategory {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
-
-            cell.configure(with: categories[indexPath.row])
+            cell.configure(with: categories[indexPath.row]) // Здесь оставляем, если это правильно для вашей ячейки категорий
             return cell
         } else if collectionView == drinksList {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoctailsListCell.identifier, for: indexPath) as! CoctailsListCell
-            let cocktail = cocktails[indexPath.row]
-            let cocktailName = cocktail.name
-            cell.configure(with: cocktailName)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoctailsListCell", for: indexPath) as! CoctailsListCell
+            let cocktail = cocktails[indexPath.row] // Получаем коктейль по индексу
+            cell.configure(with: cocktail) // Передаем коктейль в ячейку
             return cell
         }
+        
+        return UICollectionViewCell()
     }
+
 }
 
 extension CoctailsView: UICollectionViewDelegate {

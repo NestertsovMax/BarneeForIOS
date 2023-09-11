@@ -30,7 +30,6 @@ class CoctailsListCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(cocktailImageView)
         contentView.addSubview(nameLabel)
-        
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.systemGray4.cgColor

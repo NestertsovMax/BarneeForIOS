@@ -65,6 +65,7 @@
 				6F6D16642A404B4800890D1B /* Products */,
 				9C7C514000081C2369781A85 /* Pods */,
 				A7368765511BB10EED135DB4 /* Frameworks */,
+				6F6D16BC2AAF333700890D1B /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +136,14 @@
 				6F6D16952A9EABC900890D1B /* CoctailsDetailsPresenter.swift */,
 			);
 			path = CoctailsDetails;
+			sourceTree = "<group>";
+		};
+		6F6D16BC2AAF333700890D1B /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				03FA19E92A8B6D2500D4781A /* CoctailsRouter.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		9C7C514000081C2369781A85 /* Pods */ = {
