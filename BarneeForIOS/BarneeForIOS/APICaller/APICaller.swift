@@ -1,18 +1,21 @@
 import Foundation
+import OSLog
 
 protocol APICallerProtocol {
-    func getCocktails(completion: @escaping (Result<Data, Error>) -> Void)
+    func getCocktails(page: Int, completion: @escaping (Result<Data, Error>) -> Void)
 }
 
 class APICaller: APICallerProtocol {
+  
+    
     
     static let shared = APICaller()
     private init() {}
 
-    func getCocktails(completion: @escaping (Result<Data, Error>) -> Void) {
+    func getCocktails(page: Int, completion: @escaping (Result<Data, Error>) -> Void) {
         guard let url = Constants.drinksURL else {
             return
-        }
+    }
         
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
@@ -21,6 +24,8 @@ class APICaller: APICallerProtocol {
             }
             
             if let data = data {
+                let info = String(data: data, encoding: .utf8)!
+                Logger(subsystem: "Max", category: "Max").info("\(info)")
                 completion(.success(data))
             } else {
                 let error = NSError(domain: "com.yourapp.api", code: 0, userInfo: [NSLocalizedDescriptionKey: "Данные не получены"])
@@ -38,6 +43,10 @@ extension APICaller {
     }
 }
 
+struct ResultContainer<T: Codable>: Codable {
+    let result: [T]
+}
+
 struct ImageInfo: Codable {
     let uri: String
 }
@@ -45,8 +54,8 @@ struct ImageInfo: Codable {
 struct Cocktail: Codable {
     let id: String
     let name: String
-    var imageURL: String
-    let recipeID: String
+    var imageURL: String?
+    let recipeID: String?
     let images: [ImageInfo]
 
     enum CodingKeys: String, CodingKey {
@@ -60,13 +69,10 @@ struct Cocktail: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        images = try container.decode([ImageInfo].self, forKey: .images)
-        recipeID = try container.decode(String.self, forKey: .recipeID)
-
-        if let firstImage = images.first {
-            imageURL = firstImage.uri
-        } else {
-            imageURL = ""
-        }
+        images = try container.decodeIfPresent([ImageInfo].self, forKey: .images) ?? []
+        recipeID = try container.decodeIfPresent(String.self, forKey: .recipeID) ?? ""
+        imageURL = images.first?.uri
     }
+    
+    
 }

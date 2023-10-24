@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import UIKit
+
+class CoctailsDetailsPresenter {
+    private let coctail: Cocktail
+    weak var viewController: UIViewController?
+    
+    
+    init(coctail: Cocktail) {
+        self.coctail = coctail
+    }
+}

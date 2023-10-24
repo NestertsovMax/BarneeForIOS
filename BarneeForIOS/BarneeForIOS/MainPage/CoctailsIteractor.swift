@@ -1,7 +1,7 @@
 import Foundation
 
 protocol CoctailsInteractorProtocol {
-    func fetchCocktails()
+    func fetchCocktails(page: Int)
 }
 protocol APICallerDelegate: AnyObject {
     func didReceiveCocktails(_ cocktails: [Cocktail])
@@ -12,8 +12,10 @@ protocol CoctailsInteractorDelegate: AnyObject {
 }
 
 class CoctailsInteractor: CoctailsInteractorProtocol {
+    
     private let apiService: APICallerProtocol
     private var cocktails: [Cocktail] = []
+    
     
     weak var delegate: CoctailsInteractorDelegate?
     
@@ -21,16 +23,20 @@ class CoctailsInteractor: CoctailsInteractorProtocol {
         self.apiService = apiService
     }
     
-    func fetchCocktails() {
-        apiService.getCocktails { result in
+    func fetchCocktails(page: Int) {
+        apiService.getCocktails(page: 1) { result in
             switch result {
             case .success(let data):
                 do {
-                    let cocktails = try JSONDecoder().decode([Cocktail].self, from: data)
-                    self.cocktails = cocktails
-                    self.delegate?.didReceiveCocktails(cocktails)
+                    let cocktailsResult = try JSONDecoder().decode(ResultContainer<Cocktail>.self, from: data)
+                    self.cocktails = cocktailsResult.result
+                    DispatchQueue.main.async {
+                        self.delegate?.didReceiveCocktails(self.cocktails)
+                    }
                 } catch {
-                    self.delegate?.didReceiveError(error)
+                    DispatchQueue.main.async {
+                        self.delegate?.didReceiveError(error)
+                    }
                 }
                 
             case .failure(let error):
@@ -38,6 +44,8 @@ class CoctailsInteractor: CoctailsInteractorProtocol {
             }
         }
     }
+    
+    
 
 }
 

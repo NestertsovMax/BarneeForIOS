@@ -1,13 +1,14 @@
 import UIKit
 
 class CoctailsView: UIViewController, CoctailsViewProtocol {
-    
     var presenter: CoctailsPresenterProtocol?
     
     private var cocktails: [Cocktail] = []
     private var categories: [String] = []
     private var cocktailNames: [String] = []
     private var viewModelsCategory = [DrinksCategoryCell]()
+    private var currentPage = 1
+    private let cocktailsPerPage = 10
     
     private let logoLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +56,6 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
         setupVerticalCollectionView()
         setupStackView()
         
-        presenter = CoctailsPresenter(view: self, interactor: CoctailsInteractor(apiService: APICaller.shared))
         
         self.view.addSubview(logoLabel)
         self.view.addSubview(drinksCategory)
@@ -75,7 +75,7 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
         
         logoLabel.frame = CGRect(
             x: 20,
-            y: 29,
+            y: 35,
             width: 64,
             height: 23
         )
@@ -87,11 +87,14 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
             height: 36
         )
         
+        let drinksListY: CGFloat = 250
+        let drinksListHeight = view.frame.size.height - drinksListY - 20
+        
         drinksList.frame = CGRect(
             x: 20,
-            y: 250,
-            width: view.frame.size.width - 10,
-            height: view.frame.size.height - 250
+            y: drinksListY,
+            width: view.frame.size.width - 40,
+            height: drinksListHeight
         )
     }
     
@@ -105,12 +108,6 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
             green: CGFloat(0x5D) / 255.0,
             blue: CGFloat(0x5F) / 255.0,
             alpha: 1.0)
-    }
-    
-    func reloadCategoryCollectionView() {
-        DispatchQueue.main.async {
-            self.drinksCategory.reloadData()
-        }
     }
     
     func setCommonBackgroundColor(_ color: UIColor) {
@@ -131,11 +128,15 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         let itemWidth = (drinksList.bounds.width - flowLayout.minimumInteritemSpacing) / 2
-        flowLayout.itemSize = CGSize(width: itemWidth, height: 200)
-        flowLayout.minimumInteritemSpacing = 10
-        flowLayout.minimumLineSpacing = 10
+        let itemHeight: CGFloat = 250 // Оставьте высоту ячейки без изменений
+        flowLayout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+        flowLayout.minimumInteritemSpacing = 20
+        flowLayout.minimumLineSpacing = 20
         drinksList.collectionViewLayout = flowLayout
     }
+
+
+
     
     func setupStackView() {
         view.addSubview(filtersPanel)
@@ -172,18 +173,15 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
     func updateCocktails(_ cocktails: [Cocktail]) {
         self.cocktails = cocktails
         self.drinksList.reloadData()
-        
-        let cocktailNames = cocktails.map { $0.name }
-        presenter?.updateCategories(cocktailNames)
+        self.drinksCategory.reloadData()
     }
     
     func updateCategories(_ categories: [String]) {
         self.categories = categories
-        reloadCategoryCollectionView()
+        self.drinksCategory.reloadData()
     }
     
     func showError(_ error: Error) {
-        // Handle error presentation
     }
 
 }
@@ -191,7 +189,6 @@ class CoctailsView: UIViewController, CoctailsViewProtocol {
 protocol CoctailsViewProtocol: AnyObject {
     func updateCocktails(_ cocktails: [Cocktail])
     func showError(_ error: Error)
-    func reloadCategoryCollectionView()
     func updateCategories(_ categories: [String])
 }
 
@@ -204,32 +201,57 @@ extension CoctailsView: UICollectionViewDataSource {
         }
         return 0
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == drinksCategory {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCategoryCell", for: indexPath) as! DrinksCategoryCell
-            cell.configure(with: categories[indexPath.row]) // Здесь оставляем, если это правильно для вашей ячейки категорий
+            cell.configure(with: categories[indexPath.row])
             return cell
         } else if collectionView == drinksList {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoctailsListCell", for: indexPath) as! CoctailsListCell
-            let cocktail = cocktails[indexPath.row] // Получаем коктейль по индексу
-            cell.configure(with: cocktail) // Передаем коктейль в ячейку
+            let cocktail = cocktails[indexPath.row]
+            cell.configure(with: cocktail)
             return cell
         }
-        
         return UICollectionViewCell()
     }
+
+
 
 }
 
 extension CoctailsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == drinksCategory {
-            let selectedCategory = categories[indexPath.item]
+            presenter?.didSelectCategory(at: indexPath.row)
         } else if collectionView == drinksList {
-            let selectedCocktail = cocktails[indexPath.item]
+            presenter?.didSelectCocktail(at: indexPath.row)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == drinksList && indexPath.row == cocktails.count {
+            
+        }
+    }
+
 }
+
+extension CoctailsView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == drinksList {
+            // Рассчитайте ширину ячейки так, чтобы у вас было два столбца с отступами между ними
+            let numberOfColumns: CGFloat = 2
+            let spacingBetweenColumns: CGFloat = 20
+            let totalSpacing = (numberOfColumns - 1) * spacingBetweenColumns
+            let itemWidth = (collectionView.bounds.width - totalSpacing) / numberOfColumns
+            let itemHeight: CGFloat = 224 // Оставьте высоту ячейки без изменений
+            return CGSize(width: itemWidth, height: itemHeight)
+        }
+        return CGSize(width: 0, height: 0) // Возвращайте нулевой размер для других коллекций
+    }
+}
+
 
 

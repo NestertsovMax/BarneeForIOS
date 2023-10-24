@@ -20,5 +20,212 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B9E96AC1-37DE-4511-BA94-D297549A92FE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/MainPage/CoctailsPresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "didReceiveError(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B9E96AC1-37DE-4511-BA94-D297549A92FE - 2e541b830f81e380"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in BarneeForIOS.CoctailsPresenter.didReceiveError(Swift.Error) -&gt; ()"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/MainPage/CoctailsPresenter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "384">
+               </Location>
+               <Location
+                  uuid = "B9E96AC1-37DE-4511-BA94-D297549A92FE - a38eb6eb686745c9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BarneeForIOS.CoctailsPresenter.didReceiveError(Swift.Error) -&gt; ()"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/MainPage/CoctailsPresenter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "B9E96AC1-37DE-4511-BA94-D297549A92FE - 2e541b830f81e380"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in BarneeForIOS.CoctailsPresenter.didReceiveError(Swift.Error) -&gt; ()"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/MainPage/CoctailsPresenter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "35701F95-49AD-4AFF-B3A1-95FD4C924CA6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/APICaller/APICaller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2757DDE-9ED3-4ECD-9FCA-3B50823F7A3F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/APICaller/APICaller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D2757DDE-9ED3-4ECD-9FCA-3B50823F7A3F - 90789f550b36cd71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BarneeForIOS.Cocktail.init(from: Swift.Decoder) throws -&gt; BarneeForIOS.Cocktail"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/APICaller/APICaller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "736">
+               </Location>
+               <Location
+                  uuid = "D2757DDE-9ED3-4ECD-9FCA-3B50823F7A3F - 90789f550b36cd71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BarneeForIOS.Cocktail.init(from: Swift.Decoder) throws -&gt; BarneeForIOS.Cocktail"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/APICaller/APICaller.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "868">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3515CBE6-9642-4F1F-A5C6-CCA79AF0B024"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/APICaller/APICaller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "947AF05E-1311-42F7-A352-81E5F8E42C1A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/APICaller/APICaller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE9A9F2E-4065-4AB2-9C8D-D3CAD73B2959"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BarneeForIOS/MainPage/CoctailsIteractor.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "fetchCocktails(page:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AE9A9F2E-4065-4AB2-9C8D-D3CAD73B2959 - 821acd14192b980f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in BarneeForIOS.CoctailsInteractor.fetchCocktails() -&gt; ()"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/MainPage/CoctailsIteractor.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  uuid = "AE9A9F2E-4065-4AB2-9C8D-D3CAD73B2959 - ec4c9973686ce23e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in BarneeForIOS.CoctailsInteractor.fetchCocktails(page: Swift.Int) -&gt; ()"
+                  moduleName = "BarneeForIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/m1/BarneeForIOS/BarneeForIOS/BarneeForIOS/MainPage/CoctailsIteractor.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

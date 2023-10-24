@@ -11,13 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let apiService = APICaller.shared
         let interactor = CoctailsInteractor(apiService: apiService)
         
+        
         let rootViewController = CoctailsView()
-        //let router = CoctailsMainPageRouter()
-        //router.viewController = rootViewController
-        // add from next line , router
-        let presenter = CoctailsPresenter(view: rootViewController, interactor: interactor)
+        let router = CoctailsMainPageRouter()
+        router.viewController = rootViewController
+        let presenter = CoctailsPresenter(view: rootViewController, interactor: interactor, router: router)
         rootViewController.presenter = presenter
 
+        interactor.delegate = presenter
         
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

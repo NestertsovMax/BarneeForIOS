@@ -50,7 +50,7 @@ class CoctailsListCell: UICollectionViewCell {
     
     func configure(with cocktail: Cocktail) {
         nameLabel.text = cocktail.name
-        if let url = URL(string: cocktail.imageURL) {
+        if let url = URL(string: cocktail.imageURL ?? "") {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: url) {
                     DispatchQueue.main.async { [weak self] in
