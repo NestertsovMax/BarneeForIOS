@@ -14,11 +14,9 @@ class CoctailsDetailsView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Установите фон экрана
         self.view.backgroundColor = UIColor(red: 0x1C / 255.0, green: 0x21 / 255.0, blue: 0x26 / 255.0, alpha: 1.0)
 
-        // Создайте UIImageView для отображения изображения коктеля
+        
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 488)
         imageView.layer.cornerRadius = 20
@@ -29,8 +27,6 @@ class CoctailsDetailsView: UIViewController {
         }
 
         view.addSubview(imageView)
-
-        // Создайте UILabel для отображения имени коктеля поверх изображения
         let nameLabel = UILabel()
         nameLabel.frame = CGRect(x: 39, y: 88, width: view.frame.width - 78, height: 50)
         nameLabel.text = cocktail.name
@@ -41,20 +37,14 @@ class CoctailsDetailsView: UIViewController {
         nameLabel.adjustsFontSizeToFitWidth = true
         view.addSubview(nameLabel)
 
-        // Добавьте другие элементы интерфейса, такие как описание, ингредиенты и инструкции по приготовлению
-
-        // Пример создания описания
         let descriptionLabel = UILabel()
         descriptionLabel.frame = CGRect(x: 20, y: 588, width: view.frame.width - 40, height: 100)
-        descriptionLabel.text = "Описание коктеля"
+        descriptionLabel.text = "RECIPE"
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = .systemFont(ofSize: 16)
         descriptionLabel.textColor = .white
         view.addSubview(descriptionLabel)
 
-        // Добавьте другие элементы интерфейса, используя данные из вашего коктеля (например, ингредиенты и инструкции)
-
-        // Добавьте изображение кнопки "Favourite" в правом нижнем углу изображения
         let favouriteButton = UIButton()
         let favouriteImage = UIImage(named: "favourite")
         let buttonWidth: CGFloat = 40

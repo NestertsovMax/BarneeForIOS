@@ -44,9 +44,6 @@ class CoctailsInteractor: CoctailsInteractorProtocol {
             }
         }
     }
-    
-    
-
 }
 
 extension CoctailsInteractor: APICallerDelegate {

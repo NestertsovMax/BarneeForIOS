@@ -41,8 +41,8 @@ class DrinksCategoryCell: UICollectionViewCell {
   }
 
   private func setupUI() {
-    backgroundColor = .blue
     layer.cornerRadius = 8
+    backgroundColor = UIColor.blue
 
     addSubview(titleLabel)
     NSLayoutConstraint.activate([
